@@ -2,7 +2,6 @@
 
 GHCVERSION = $(shell ghc --numeric-version)
 ifneq ($(findstring 7., $(GHCVERSION)),)
-GHC7OPTS =
 GHC7RTSOPTS = -rtsopts
 endif
 
@@ -39,7 +38,10 @@ UNIX_PACKAGE = -DUNIX
 endif
 
 GLADEVERSION = $(shell $(HCPKG) latest glade)
-ifneq ($(findstring 0.1, $(GLADEVERSION)),)
+ifneq ($(findstring 0.12, $(GLADEVERSION)),)
+GLADE_PACKAGE = -DGTKGLADE -DGTK12 $(SUNRUNPATH)
+endif
+ifneq ($(findstring 0.13, $(GLADEVERSION)),)
 GLADE_PACKAGE = -DGTKGLADE $(SUNRUNPATH)
 endif
 
@@ -112,7 +114,7 @@ HASKELINE_PACKAGE =
 GLADE_PACKAGE =
 endif
 
-HC_OPTS_WITHOUTGLADE = $(GHC7OPTS) $(PARSEC_FLAG) \
+HC_OPTS_WITHOUTGLADE = $(PARSEC_FLAG) \
   $(TIME_PACKAGE) $(TAR_PACKAGE) $(HTTP_PACKAGE) $(UNIX_PACKAGE) \
   $(UNI_PACKAGE) $(HASKELINE_PACKAGE) $(HEXPAT_PACKAGE) \
   $(PFE_FLAGS) $(SERVER_FLAG) $(HAXML_PACKAGE) $(HAXML_PACKAGE_COMPAT) \
